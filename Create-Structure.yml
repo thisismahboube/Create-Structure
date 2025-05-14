@@ -1,0 +1,39 @@
+---
+- name: Create standard Ansible project structure
+  hosts: AnsibleCS
+  connection: local
+  gather_facts: no
+
+  vars:
+    project_root: /etc/ansible
+    directories:
+      - "{{ project_root }}/group_vars"
+      - "{{ project_root }}/host_vars"
+      - "{{ project_root }}/roles/common/tasks"
+      - "{{ project_root }}/roles/common/handlers"
+      - "{{ project_root }}/roles/common/files"
+      - "{{ project_root }}/roles/common/templates"
+      - "{{ project_root }}/roles/common/vars"
+    files:
+      - "{{ project_root }}/inventory.ini"
+      - "{{ project_root }}/playbook.yml"
+      - "{{ project_root }}/group_vars/all.yml"
+      - "{{ project_root }}/host_vars/hostname.yml"
+      - "{{ project_root }}/roles/common/tasks/main.yml"
+      - "{{ project_root }}/roles/common/handlers/main.yml"
+      - "{{ project_root }}/roles/common/vars/main.yml"
+
+  tasks:
+    - name: Create directories
+      file:
+        path: "{{ item }}"
+        state: directory
+        mode: '0755'
+      loop: "{{ directories }}"
+
+    - name: Create empty files
+      file:
+        path: "{{ item }}"
+        state: touch
+        mode: '0644'
+      loop: "{{ files }}"
