@@ -1,2 +1,2 @@
 # finally you need to execute your playbook
-ansible-playbook create-structure.yml
+ansible-playbook Create-Structure.yml
